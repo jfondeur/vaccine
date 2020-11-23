@@ -1,0 +1,5 @@
+<!-- Ajax load filtered municipio -->
+<option value="">---------</option>
+{% for municipio in municipios %}
+<option value="{{ municipio.pk }}">{{ municipio.name }}</option>
+{% endfor %}
