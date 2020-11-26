@@ -24,7 +24,7 @@
                     <td class="border px-4 py-2">{{ patient.last_name }}</td>
                     <td class="border px-4 py-2">{{ patient.date_posted }}</td>
                     <td class="border px-4 py-2">{{ patient.created_by.first_name }} {{patient.created_by.last_name}}</td>
-                    <td class="border px-4 py-2">{{ patient.location.provincia }}</td>
+                    <td class="border px-4 py-2">{{ patient.location.provincia.name }}</td>
                     <td class="border px-4 py-2">{{ patient.location.name }}</td>
                 </tr>
             {% endfor %}

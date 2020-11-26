@@ -25,7 +25,7 @@ SECRET_KEY = 'k@60@xjdl8%-i&$%*=)0hc@w@cj1jbp#(c7s)e43avv52cdcva'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.147', '127.0.0.1']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_tailwind",
     'import_export',
+    'places',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -89,13 +90,23 @@ WSGI_APPLICATION = 'journey.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django',
+        'USER': 'covid',
+        'PASSWORD': 'puntacana2020',
+        'HOST': '165.22.188.54',
+        'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -145,3 +156,8 @@ STATICFILES_DIRS = [
 
 LOGIN_REDIRECT_URL = 'app-home'
 LOGIN_URL = 'login'
+
+PLACES_MAPS_API_KEY='AIzaSyD1mLhL9ri4jnuSIrK88OcY1GdAcBeWQOc'
+PLACES_MAP_WIDGET_HEIGHT=480
+PLACES_MAP_OPTIONS='{"center": { "lat": 18.6665561, "lng": -71.2540354 }, "zoom": 8}'
+PLACES_MARKER_OPTIONS='{"draggable": true}'

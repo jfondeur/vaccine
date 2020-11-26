@@ -1,0 +1,11 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<h1>Hola</h1>
+{% for provincia_count in number_of_patients %}
+    {{ provincia_count.location_m.latitude }}
+    <br>
+    Number of Patients: {{ provincia_count.number_of_patients }}
+    <br>
+{% endfor %}
+
+{% endblock %}
