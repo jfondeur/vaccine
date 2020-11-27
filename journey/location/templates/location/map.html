@@ -1,11 +1,52 @@
 {% extends "blog/base.html" %}
 {% block content %}
-<h1>Hola</h1>
-{% for provincia_count in number_of_patients %}
-    {{ provincia_count.location_m.latitude }}
-    <br>
-    Number of Patients: {{ provincia_count.number_of_patients }}
-    <br>
-{% endfor %}
+<style>
+    #map {
+        height: 600px;
+        width: 100%;
+    }
+</style>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1mLhL9ri4jnuSIrK88OcY1GdAcBeWQOc&callback=initMap&libraries=&v=weekly" defer></script>
+
+<h1 class="text-2xl mb-3">Vaccine Map</h1>
+
+<script>
+
+
+    const citymap = {
+        {% for provincia_count in number_of_patients %}
+            {{provincia_count.name |lower |cut:" "}}: {
+                center: { lat: {{ provincia_count.location_m.latitude }}, lng: {{ provincia_count.location_m.longitude }} },
+                population: {{ provincia_count.number_of_patients }},
+            },
+            
+        {% endfor %}
+    };
+
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 8,
+            center: { lat: 18.6665561, lng: -71.2540354 },
+        });
+        // Construct the circle for each value in citymap.
+        // Note: We scale the area of the circle based on the population.
+        for (const city in citymap) {
+            // Add the circle for this city to the map.
+            const cityCircle = new google.maps.Circle({
+            strokeColor: "#097bd3",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#097bd3",
+            fillOpacity: 0.35,
+            map,
+            center: citymap[city].center,
+            radius: Math.sqrt(citymap[city].population) * 10000,
+            });
+        }
+    }
+</script>
+<div id="map"></div>
 
 {% endblock %}

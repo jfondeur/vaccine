@@ -1,0 +1,41 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1mLhL9ri4jnuSIrK88OcY1GdAcBeWQOc&callback=initMap&libraries=&v=weekly" defer></script>
+
+    <h1 class="text-2xl mb-3">Vaccine Map</h1>
+
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 8,
+                center: { lat: 18.6665561, lng: -71.2540354 },
+            });
+            const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const markers = locations.map((location, i) => {
+                return new google.maps.Marker({
+                position: location,
+                label: labels[i % labels.length],
+                });
+            });
+            // Add a marker clusterer to manage the markers.
+            new MarkerClusterer(map, markers, {
+                imagePath:
+                "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
+            });
+        }
+        const locations = [
+        {% for patient in patients %}
+            {lat: {{ patient.location.provincia.location_m.latitude }}, lng: {{ patient.location.provincia.location_m.longitude }}},
+        {% endfor %}
+        ]
+    </script>
+    <div id="map"></div>
+{% endblock content%}

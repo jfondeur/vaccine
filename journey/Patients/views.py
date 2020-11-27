@@ -21,6 +21,18 @@ class PatientsView(ListView):
     context_object_name = 'patients'
     ordering = ['date_posted']
 
+class MapView(ListView):
+    model = Patient
+    template_name = 'Patients/maps.html'
+    context_object_name = 'patients'
+    ordering = ['date_posted']
+
+class MapViewC(ListView):
+    model = Patient
+    template_name = 'Patients/maps_circle.html'
+    context_object_name = 'patients'
+    ordering = ['date_posted']
+
 
 class CreatePatient(ModelForm):
     class Meta:
